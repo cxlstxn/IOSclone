@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-import FaceTimePage from './FacetimePage'; // Import FaceTimePage
-import NotesPage from './NotesPage'; // Import NotesPage
+import FaceTimePage from './FacetimePage';
+import NotesPage from './NotesPage';
+import SettingsPage from './SettingsPage';
 
 import './App.css';
 import bgImage from './img/bg.jpg';
@@ -28,10 +29,6 @@ import calenderSvg from './img/calender.svg';
 import tvSvg from './img/tv.svg';
 import notesSvg from './img/notes.svg';
 
-
-
-
-
 // Placeholder page components for other apps
 const MailPage = () => <div><h1>Mail Page</h1><Link to="/">Back to Home</Link></div>;
 const RemindersPage = () => <div><h1>Reminders Page</h1><Link to="/">Back to Home</Link></div>;
@@ -50,7 +47,6 @@ const CameraPage = () => <div><h1>Camera Page</h1><Link to="/">Back to Home</Lin
 const WeatherPage = () => <div><h1>Weather Page</h1><Link to="/">Back to Home</Link></div>;
 const NewsPage = () => <div><h1>News Page</h1><Link to="/">Back to Home</Link></div>;
 const TVPage = () => <div><h1>TV Page</h1><Link to="/">Back to Home</Link></div>;
-const SettingsPage = () => <div><h1>Settings Page</h1><Link to="/">Back to Home</Link></div>;
 const PhonePage = () => <div><h1>Phone Page</h1><Link to="/">Back to Home</Link></div>;
 const SafariPage = () => <div><h1>Safari Page</h1><Link to="/">Back to Home</Link></div>;
 const MessagesPage = () => <div><h1>Messages Page</h1><Link to="/">Back to Home</Link></div>;
@@ -114,16 +110,8 @@ function App() {
           path="/"
           element={
             <div
-              style={{
-                width: '375px',
-                border: '1px solid black',
-                height: '812px',
-                margin: '0 auto',
-                position: 'relative',
-                backgroundImage: `url(${bgImage})`,
-                backgroundSize: 'cover',
-                backgroundPosition: 'center',
-              }}
+              className="app-container"
+              style={{ backgroundImage: `url(${bgImage})` }}
             >
               {boxData.map((box, index) => (
                 <div key={`box-${index}`}>
@@ -131,76 +119,27 @@ function App() {
                     <Link
                       key={`svg-${iconIndex}-${index}`}
                       to={icon.path}
+                      className="icon-link"
                       style={{
-                        position: 'absolute',
                         top: `${11 + iconIndex * 13}%`,
                         left: `${box.leftPosition}%`,
-                        transform: 'translate(-50%, -50%)',
-                        textAlign: 'center',
-                        textDecoration: 'none',
                       }}
                     >
-                      <img
-                        src={icon.src}
-                        alt={`icon-${iconIndex}`}
-                        style={{
-                          width: '70px',
-                          height: '70px',
-                          borderRadius: '15px',
-                        }}
-                      />
-                      <span
-                        style={{
-                          display: 'block',
-                          marginTop: '5px',
-                          fontSize: '12px',
-                          color: '#fff',
-                          textShadow: '0 0 2px rgba(0, 0, 0, 0.5)',
-                          fontFamily:
-                            '-apple-system, BlinkMacSystemFont, "San Francisco", "Helvetica Neue", Helvetica, Arial, sans-serif',
-                        }}
-                      >
-                        {icon.label}
-                      </span>
+                      <img src={icon.src} alt={`icon-${iconIndex}`} />
+                      <span className="icon-label">{icon.label}</span>
                     </Link>
                   ))}
                 </div>
               ))}
               {/* Dock */}
-              <div
-                style={{
-                  position: 'absolute',
-                  bottom: '20px',
-                  left: '50%',
-                  transform: 'translateX(-50%)',
-                  backgroundColor: 'rgba(255, 255, 255, 0.2)',
-                  backdropFilter: 'blur(10px)',
-                  borderRadius: '25px',
-                  padding: '10px 15px',
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  width: '330px',
-                  boxShadow: '0 2px 5px rgba(0, 0, 0, 0.1)',
-                }}
-              >
+              <div className="dock">
                 {dockIcons.map((icon, index) => (
                   <Link
                     key={`dock-icon-${index}`}
                     to={icon.path}
-                    style={{
-                      textAlign: 'center',
-                      textDecoration: 'none',
-                    }}
+                    className="dock-icon-link"
                   >
-                    <img
-                      src={icon.src}
-                      alt={`dock-icon-${index}`}
-                      style={{
-                        width: '70px',
-                        height: '70px',
-                        borderRadius: '15px',
-                      }}
-                    />
+                    <img src={icon.src} alt={`dock-icon-${index}`} />
                   </Link>
                 ))}
               </div>
@@ -216,6 +155,7 @@ function App() {
         <Route path="/calendar" element={<CalendarPage />} />
         <Route path="/clock" element={<ClockPage />} />
         <Route path="/notes" element={<NotesPage />} />
+        <Route path="/note/:id" element={<NotesPage />} /> {/* Added route for individual notes */}
         <Route path="/appstore" element={<AppStorePage />} />
         <Route path="/home" element={<HomePage />} />
         <Route path="/photos" element={<PhotosPage />} />
